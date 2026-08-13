@@ -1,5 +1,7 @@
 package com.example.rest_api.controller;
 
+import com.example.rest_api.dto.ApiResponse;
+import com.example.rest_api.dto.AuthResponse;
 import com.example.rest_api.model.User;
 import com.example.rest_api.service.AuthService;
 import jakarta.validation.Valid;
@@ -18,24 +20,48 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<User> register(@Valid @RequestBody User user) {
+    public ResponseEntity<ApiResponse<AuthResponse>> register(
+            @Valid @RequestBody User user) {
 
         User registeredUser = authService.register(user);
 
+        AuthResponse response = new AuthResponse(
+                registeredUser.getId(),
+                registeredUser.getName(),
+                registeredUser.getEmail()
+        );
+
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(registeredUser);
+                .body(new ApiResponse<>(
+                        true,
+                        "User registered successfully",
+                        response
+                ));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<User> login(@RequestBody LoginRequest request) {
+    public ResponseEntity<ApiResponse<AuthResponse>> login(
+            @RequestBody LoginRequest request) {
 
         User user = authService.login(
                 request.getEmail(),
                 request.getPassword()
         );
 
-        return ResponseEntity.ok(user);
+        AuthResponse response = new AuthResponse(
+                user.getId(),
+                user.getName(),
+                user.getEmail()
+        );
+
+        return ResponseEntity.ok(
+                new ApiResponse<>(
+                        true,
+                        "Login successful",
+                        response
+                )
+        );
     }
 
     public static class LoginRequest {
