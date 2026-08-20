@@ -31,8 +31,11 @@ public class SecurityConfig {
 
         // React Vite frontend
         configuration.setAllowedOrigins(
-                List.of("http://localhost:5173")
-        );
+        List.of(
+        "http://localhost:5173",
+        "https://full-stack-frontend-pink.vercel.app"
+         )
+     );
 
         // Allowed HTTP methods
         configuration.setAllowedMethods(
