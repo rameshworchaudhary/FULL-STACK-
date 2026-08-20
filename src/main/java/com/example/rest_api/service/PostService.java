@@ -1,5 +1,6 @@
 package com.example.rest_api.service;
 
+import com.example.rest_api.exception.ResourceNotFoundException;
 import com.example.rest_api.model.Post;
 import com.example.rest_api.repository.PostRepository;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,9 @@ public class PostService {
     public Post getPostById(Long id) {
         return postRepository.findById(id)
                 .orElseThrow(() ->
-                        new RuntimeException("Post not found with id: " + id));
+                        new ResourceNotFoundException(
+                                "Post not found with id: " + id
+                        ));
     }
 
     // Update
