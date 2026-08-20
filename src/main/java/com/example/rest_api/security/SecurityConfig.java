@@ -24,45 +24,39 @@ public class SecurityConfig {
     }
 
     // CORS Configuration
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
+@Bean
+public CorsConfigurationSource corsConfigurationSource() {
 
-        CorsConfiguration configuration = new CorsConfiguration();
+    CorsConfiguration configuration = new CorsConfiguration();
 
-        // React Vite frontend
-        configuration.setAllowedOrigins(
+    configuration.setAllowedOrigins(
         List.of(
-        "http://localhost:5173",
-        "https://full-stack-frontend-pink.vercel.app"
-         )
-     );
+            "http://localhost:5173",
+            "https://full-stack-frontend-pink.vercel.app"
+        )
+    );
 
-        // Allowed HTTP methods
-        configuration.setAllowedMethods(
-                List.of(
-                        HttpMethod.GET.name(),
-                        HttpMethod.POST.name(),
-                        HttpMethod.PUT.name(),
-                        HttpMethod.DELETE.name(),
-                        HttpMethod.OPTIONS.name()
-                )
-        );
+    configuration.setAllowedMethods(
+        List.of(
+            HttpMethod.GET.name(),
+            HttpMethod.POST.name(),
+            HttpMethod.PUT.name(),
+            HttpMethod.DELETE.name(),
+            HttpMethod.OPTIONS.name()
+        )
+    );
 
-        // Allowed headers
-        configuration.setAllowedHeaders(
-                List.of("*")
-        );
+    configuration.setAllowedHeaders(List.of("*"));
 
-        // Allow credentials
-        configuration.setAllowCredentials(true);
+    configuration.setAllowCredentials(true);
 
-        UrlBasedCorsConfigurationSource source =
-                new UrlBasedCorsConfigurationSource();
+    UrlBasedCorsConfigurationSource source =
+        new UrlBasedCorsConfigurationSource();
 
-        source.registerCorsConfiguration("/**", configuration);
+    source.registerCorsConfiguration("/**", configuration);
 
-        return source;
-    }
+    return source;
+}
 
     // Security Configuration
     @Bean
